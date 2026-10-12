@@ -57,11 +57,37 @@ app.post("/api/v1/signup", async (req,res)=>{
 })
 
 app.post("/api/v1/signin", async (req,res)=>{
-    
+    try{
+        const {userName, password} = req.body
+
+        const user = await UserModel.findOne({userName})
+
+        if(!user){
+            res.status(401).json({message : "User doesn't exist"})
+        }
+
+        const valid = await bcrypt.compare(password, user!.password)
+
+        if(!valid){
+            res.status(402).json({message : `Wrong credentials`})
+        }
+
+        const token = jwt.sign({userId : user!._id}, jwtUserKey!)
+
+        res.json({
+            token,
+            message : `Signed in successfully`
+        })
+    }
+    catch(err){
+        console.log(`Error during signing in`)
+        res.status(400).json({
+            message : `Error occured ${err}`
+        })
+    }
 })
 
 app.post("/api/v1/content", (req,res)=>{
-    const {link, tags, type, title, userId} = req.body
 })
 
 app.get("/api/v1/content", (req,res)=>{
