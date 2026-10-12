@@ -22,3 +22,4 @@ const link = new Schema ({
 })
 
 export const UserModel = model("User", userSchema)
+export const ContentModel = model("Content", contentSchema)
