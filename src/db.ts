@@ -8,7 +8,11 @@ const userSchema = new Schema({
 })
 
 const contentSchema = new Schema({
-    
+    link : String,
+    type : String,
+    title : String,
+    tags : [{type: ObjectId, ref:'Tag'}],
+    userId : {type:ObjectId, ref:'User', required:true}
 })
 
 const tag = new Schema ({
