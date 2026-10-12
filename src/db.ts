@@ -15,11 +15,11 @@ const contentSchema = new Schema({
     userId : {type:ObjectId, ref:'User', required:true}
 })
 
-const tag = new Schema ({
-})
-
-const link = new Schema ({
+const linkSchema = new Schema ({
+    hash : String,
+    userId : {type:ObjectId, ref : 'User', required: true, unique : true}
 })
 
 export const UserModel = model("User", userSchema)
 export const ContentModel = model("Content", contentSchema)
+export const LinkModel = model('Links', linkSchema)
